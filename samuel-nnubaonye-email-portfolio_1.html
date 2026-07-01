@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Samuel Nnubaonye — Email Marketing, for Curate Group</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #15141b;
+    --surface: #1d1b26;
+    --surface-hover: #24222f;
+    --line: #322f3d;
+    --text: #f3f1ec;
+    --text-muted: #a29fb0;
+    --text-faint: #6b6878;
+    --gold: #e3a94c;
+    --violet: #8b7cf0;
+    --flag: #c17b6b;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 720px; margin: 0 auto; padding: 56px 24px 80px; }
+
+  .client-window {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px -30px rgba(0,0,0,0.6);
+  }
+
+  .chrome {
+    display: flex; align-items: center; gap: 8px;
+    padding: 14px 18px; border-bottom: 1px solid var(--line);
+  }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--text-faint); opacity: 0.5; }
+  .chrome-label {
+    margin-left: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+    letter-spacing: 0.06em; color: var(--text-faint); text-transform: uppercase;
+  }
+
+  .hero { padding: 40px 32px 36px; border-bottom: 1px solid var(--line); }
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--gold); margin: 0 0 14px;
+  }
+  h1 {
+    font-family: 'Fraunces', serif; font-weight: 500; font-size: clamp(28px, 4.2vw, 38px);
+    line-height: 1.22; margin: 0 0 16px; letter-spacing: -0.01em;
+  }
+  h1 em { font-style: italic; font-weight: 400; color: var(--gold); }
+  .hero p { color: var(--text-muted); font-size: 16px; max-width: 58ch; margin: 0 0 8px; }
+  .hero-meta {
+    display: flex; gap: 18px; margin-top: 22px; font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px; color: var(--text-faint);
+  }
+
+  .inbox { list-style: none; margin: 0; padding: 0; }
+  details.row { border-bottom: 1px solid var(--line); }
+  details.row:last-child { border-bottom: none; }
+
+  summary.row-head {
+    cursor: pointer; list-style: none; display: grid;
+    grid-template-columns: 22px 1fr auto; align-items: baseline; gap: 14px;
+    padding: 20px 32px; transition: background 0.15s ease;
+  }
+  summary.row-head::-webkit-details-marker { display: none; }
+  summary.row-head:hover { background: var(--surface-hover); }
+
+  .unread-dot {
+    width: 7px; height: 7px; border-radius: 50%; background: var(--violet);
+    margin-top: 6px; transition: opacity 0.2s ease;
+  }
+  details[open] .unread-dot { opacity: 0.15; }
+
+  .row-text { min-width: 0; }
+  .row-sender {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.05em;
+    text-transform: uppercase; color: var(--text-faint); margin: 0 0 5px;
+  }
+  .row-subject {
+    font-family: 'Fraunces', serif; font-weight: 500; font-size: 18px;
+    color: var(--text); margin: 0 0 4px; line-height: 1.35;
+  }
+  .row-preview {
+    color: var(--text-faint); font-size: 14px; margin: 0;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .row-caret {
+    font-family: 'IBM Plex Mono', monospace; color: var(--text-faint); font-size: 13px;
+    transition: transform 0.2s ease; align-self: center;
+  }
+  details[open] .row-caret { transform: rotate(90deg); }
+
+  .row-body { padding: 0 32px 32px 66px; animation: reveal 0.25s ease; }
+  @keyframes reveal { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+
+  .row-body p { color: var(--text-muted); font-size: 15px; margin: 0 0 14px; max-width: 58ch; }
+  .row-body strong { color: var(--text); font-weight: 600; }
+
+  .tag {
+    display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px;
+    letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 8px; border-radius: 3px;
+    margin-bottom: 16px; border: 1px solid var(--line); color: var(--text-faint);
+  }
+
+  .metric-strip {
+    display: flex; gap: 28px; flex-wrap: wrap; margin: 18px 0 20px; padding: 16px 0;
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  }
+  .metric { font-family: 'IBM Plex Mono', monospace; }
+  .metric .num { display: block; font-size: 22px; color: var(--gold); font-weight: 500; }
+  .metric .label {
+    display: block; font-size: 11px; color: var(--text-faint); text-transform: uppercase;
+    letter-spacing: 0.05em; margin-top: 2px;
+  }
+
+  .caveat {
+    font-size: 13px; color: var(--text-faint); font-style: italic;
+    border-left: 2px solid var(--line); padding-left: 12px; margin-top: 4px;
+  }
+
+  /* email preview cards */
+  .email-card { border: 1px solid var(--line); border-radius: 6px; overflow: hidden; margin: 6px 0 20px; }
+  .email-card-head {
+    padding: 10px 16px; font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    letter-spacing: 0.04em; display: flex; justify-content: space-between; gap: 10px;
+    flex-wrap: wrap; border-bottom: 1px solid var(--line); background: var(--bg);
+  }
+  .email-card-head.original { color: var(--flag); }
+  .email-card-head.rewrite { color: var(--gold); }
+  .email-card-body {
+    padding: 18px 20px; font-size: 13.5px; line-height: 1.75; color: var(--text-muted);
+    white-space: pre-line; background: rgba(0,0,0,0.15);
+  }
+
+  .diag-list { display: flex; flex-direction: column; gap: 10px; margin: 4px 0 22px; }
+  .diag-item {
+    display: flex; gap: 12px; padding: 12px 16px; border: 1px solid var(--line);
+    border-radius: 5px; background: var(--bg);
+  }
+  .diag-mark { color: var(--flag); font-family: 'IBM Plex Mono', monospace; font-size: 13px; flex-shrink: 0; }
+  .diag-text { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
+  .diag-text strong { color: var(--text); }
+
+  .footer {
+    margin-top: 40px; padding: 32px 4px 0; display: flex; justify-content: space-between;
+    align-items: flex-end; flex-wrap: wrap; gap: 20px;
+  }
+  .footer h2 { font-family: 'Fraunces', serif; font-weight: 400; font-style: italic; font-size: 21px; margin: 0 0 6px; color: var(--text); }
+  .footer p { color: var(--text-faint); font-size: 14px; margin: 0; max-width: 44ch; }
+  .contact { text-align: right; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--text-muted); }
+  .contact a { color: var(--gold); text-decoration: none; }
+  .contact a:hover { text-decoration: underline; }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 32px 14px 60px; }
+    .hero { padding: 30px 20px 28px; }
+    summary.row-head { padding: 18px 20px; grid-template-columns: 16px 1fr; }
+    .row-caret { display: none; }
+    .row-body { padding: 0 20px 26px 36px; }
+    .footer { flex-direction: column; align-items: flex-start; }
+    .contact { text-align: left; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="client-window">
+    <div class="chrome">
+      <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      <span class="chrome-label">Inbox — 4 unread</span>
+    </div>
+
+    <div class="hero">
+      <p class="eyebrow">Prepared for Jade · Curate Group</p>
+      <h1>Email marketing for a company that's <em>opening in new cities faster than most brands can keep their inbox straight.</em></h1>
+      <p>Scaling Lumos, Conc3pt, Beyond 30 and the rest of Curate Group across new markets means more lists, more segments, and more chances for the message to get generic. Open the ones below.</p>
+      <div class="hero-meta">
+        <span>Samuel Nnubaonye</span>
+        <span>Email Marketing Manager — Applicant</span>
+      </div>
+    </div>
+
+    <ul class="inbox">
+
+      <li>
+        <details class="row" open>
+          <summary class="row-head">
+            <span class="unread-dot"></span>
+            <span class="row-text">
+              <p class="row-sender">Sample — ticket sale send</p>
+              <p class="row-subject">Two nights left before this one's full</p>
+              <p class="row-preview">Fridays go first. That's how it's gone every time...</p>
+            </span>
+            <span class="row-caret">→</span>
+          </summary>
+          <div class="row-body">
+            <span class="tag">Written for this application, using Lumos as the reference brand. Not a live campaign.</span>
+            <div class="email-card">
+              <div class="email-card-head rewrite"><span>SAMPLE</span><span>Subject: Two nights left before this one's full</span></div>
+              <div class="email-card-body">Hi [First name],
+
+Fridays go first. That's just how it's gone every time we've run this one.
+
+If you've been meaning to grab a ticket to Lumos: Golden Hour, this is the point where waiting stops being a strategy. Most of Friday's room is already spoken for, and once it's full, it's full.
+
+Get your ticket. Two minutes now, no regret Friday night.
+
+See you there,
+The Lumos team</div>
+            </div>
+            <p><strong>Why this shape:</strong> urgency comes from a real, specific fact (Friday sells first), not manufactured pressure. One CTA, one reason to act now, no filler before it.</p>
+          </div>
+        </details>
+      </li>
+
+      <li>
+        <details class="row">
+          <summary class="row-head">
+            <span class="unread-dot"></span>
+            <span class="row-text">
+              <p class="row-sender">Sample — community send</p>
+              <p class="row-subject">What actually happened at Golden Hour</p>
+              <p class="row-preview">The room hit capacity by 8pm, and here's what that means next...</p>
+            </span>
+            <span class="row-caret">→</span>
+          </summary>
+          <div class="row-body">
+            <span class="tag">Written for this application, using Lumos as the reference brand. Not a live campaign.</span>
+            <div class="email-card">
+              <div class="email-card-head rewrite"><span>SAMPLE</span><span>Subject: What actually happened at Golden Hour</span></div>
+              <div class="email-card-body">Hi [First name],
+
+Golden Hour sold out faster than we expected, and if you were there, you already know why.
+
+The rooftop set ran twenty minutes over because nobody wanted it to stop. That's the kind of night we're trying to build more of.
+
+We're taking what worked, and what didn't, straight into planning the next one. You're already on the list for first access when tickets open.
+
+The Lumos team</div>
+            </div>
+            <p><strong>Why this shape:</strong> keeps the community warm between ticket pushes. No ask, no CTA pressure, just proof the brand is worth staying subscribed to.</p>
+          </div>
+        </details>
+      </li>
+
+      <li>
+        <details class="row">
+          <summary class="row-head">
+            <span class="unread-dot"></span>
+            <span class="row-text">
+              <p class="row-sender">Case study — fintech client, anonymized</p>
+              <p class="row-subject">Reply rates were stuck at 2.3%. Here's the audit that moved them.</p>
+              <p class="row-preview">Every email described the product. None of them named the reader's Tuesday morning...</p>
+            </span>
+            <span class="row-caret">→</span>
+          </summary>
+          <div class="row-body">
+            <span class="tag">Real client engagement. Names and company withheld here out of discretion.</span>
+            <p>A fintech client's CRO was sending outbound emails to prospects at other institutions, almost nothing came back. I audited the sequence and rewrote each underperforming email.</p>
+
+            <div class="diag-list">
+              <div class="diag-item"><span class="diag-mark">01</span><span class="diag-text"><strong>The body read like a brochure, not a diagnosis.</strong> Feature bullet points instead of one sentence naming the reader's actual operational pain in their own language.</span></div>
+              <div class="diag-item"><span class="diag-mark">02</span><span class="diag-text"><strong>The CTA explained what the sender got, not the reader.</strong> "I'd value the opportunity to share what we're seeing" answers nobody's question about why they should give up 20 minutes.</span></div>
+            </div>
+
+            <div class="email-card">
+              <div class="email-card-head original"><span>ORIGINAL</span><span>Subject: Quick intro on our platform</span></div>
+              <div class="email-card-body">Hi [Name],
+
+I hope you're doing well. I'm reaching out as a fellow [shared alma mater] alum.
+
+I'm currently with [Company], where we've built a platform purpose-built for [industry]. Across the market, we consistently see teams managing this across multiple systems and spreadsheets. Our platform brings the full lifecycle into one place, with a focus on:
+
+- Driving efficiency through automation
+- Improving data integrity and controls
+- Providing real-time visibility for better decisions
+
+Would you be open to a brief 20-minute introduction in the coming days?</div>
+            </div>
+
+            <div class="email-card">
+              <div class="email-card-head rewrite"><span>REWRITE</span><span>Subject: [Shared alma mater] to [Firm], something relevant to your team</span></div>
+              <div class="email-card-body">Hi [Name],
+
+Reaching out as a fellow [shared alma mater] alum.
+
+Our founder built this platform specifically after watching teams like yours manage reporting across five disconnected systems. At your scale, that's not just slow, it's a real risk to data accuracy and decision speed.
+
+Worth a 20-minute call? I can share what we're seeing operationally across teams at your scale, useful either way.</div>
+            </div>
+
+            <div class="metric-strip">
+              <div class="metric"><span class="num">2.3% → 5.1%</span><span class="label">Reply rate, six weeks</span></div>
+              <div class="metric"><span class="num">↑</span><span class="label">Open rate, trending up</span></div>
+            </div>
+            <p><strong>What this means for Curate Group:</strong> the same discipline applies to ticketing and audience emails. If a send doesn't earn a click, the fix is almost always in the specific words, not a bigger list.</p>
+          </div>
+        </details>
+      </li>
+
+      <li>
+        <details class="row">
+          <summary class="row-head">
+            <span class="unread-dot"></span>
+            <span class="row-text">
+              <p class="row-sender">Note — why this role, why now</p>
+              <p class="row-subject">The fit, as I see it</p>
+              <p class="row-preview">Seven brands under one group, expanding into new cities, means...</p>
+            </span>
+            <span class="row-caret">→</span>
+          </summary>
+          <div class="row-body">
+            <p>Curate Group isn't one audience, it's several: Lumos attendees, Conc3pt's crowd, Beyond 30's community, and the rest, each with a different reason to open an email. As the group expands into new cities, the risk isn't a lack of emails going out. It's every brand starting to sound the same because volume is going up faster than the care per send.</p>
+            <p>That's the job I'd want here. Not just writing campaigns that go out on schedule, but keeping every list, every brand, and every city feeling like it's still written for a specific person, at the pace Curate Group needs to grow.</p>
+          </div>
+        </details>
+      </li>
+
+    </ul>
+  </div>
+
+  <div class="footer">
+    <div>
+      <h2>Ready to talk specifics whenever you are.</h2>
+      <p>Happy to walk through any of this in more detail, or start on a sample send for one of the brands.</p>
+    </div>
+    <div class="contact">
+      Samuel Nnubaonye<br>
+      <a href="mailto:nnubaonyesamuel@gmail.com">nnubaonyesamuel@gmail.com</a><br>
+      +234 901 518 3698
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
